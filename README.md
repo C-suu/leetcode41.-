@@ -152,7 +152,7 @@ elif nums[left] <= left or nums[left] > right or nums[nums[left] - 1] == nums[le
 并且不应该是先nums[left], nums[right] = nums[right], nums[left]；
 然后再right -= 1吗？因为先right -= 1好像nums[left], nums[right] = nums[right], nums[left]就不是替换的最后一个数字而是倒数第二个？
 
-先解决关于 **“为什么先 `right -= 1` 再交换”** 的代码顺序疑惑；然后用一个 **精心设计的简单算例**，看懂那三个判定条件（过小、过大、重复）。
+先解决关于 **“为什么先 `right -= 1` 再交换”** 的代码顺序疑惑；然后用一个 **精心设计的简单算例**，看懂`过小、过大、重复`。
 ### 一、 为什么必须是先 `right -= 1` 再交换？
 直觉很敏锐，觉得应该和最后一个数字替换。但这里隐藏着一个关于 **“数组索引越界”** 和 **“开闭区间”** 的细节。
 **关键点：`right` 的初始值是数组的长度（`len(nums)`），而不是最后一个索引！**
