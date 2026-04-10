@@ -42,29 +42,29 @@
 ```python
 class Solution:
     def firstMissingPositive(self, nums: list[int]) -> int:
-        # l 指针：有效区的右边界，[0, l) 内的元素保证是 1, 2, 3...
-        l = 0
-        # r 指针：垃圾区的左边界，[r, len(nums)) 内的元素被判定为无用
-        r = len(nums)  
-        # 当盲区 [l, r) 还存在时，继续循环处理
-        while l < r:
-            # 场景 1: 当前位置的数字恰好等于期望值（下标 l 对应数字 l+1）
-            if nums[l] == l + 1:
-                l += 1  # 有效区向右扩张
+        # left 指针：有效区的右边界，[0, left) 内的元素保证是 1, 2, 3...
+        left = 0
+        # right 指针：垃圾区的左边界，[right, len(nums)) 内的元素被判定为无用
+        right = len(nums)  
+        # 当盲区 [left, right) 还存在时，继续循环处理
+        while left < right:
+            # 场景 1: 当前位置的数字恰好等于期望值（下标 left 对应数字 left + 1）
+            if nums[left] == left + 1:
+                left += 1  # 有效区向右扩张
             # 场景 2: 当前数字是垃圾 -> 负数/过小、过大、目标位置已有重复数字
-            elif nums[l] <= l or nums[l] > r or nums[nums[l] - 1] == nums[l]:
-                r -= 1  # 垃圾区向左扩张
+            elif nums[left] <= left or nums[left] > right or nums[nums[left] - 1] == nums[left]:
+                right -= 1  # 垃圾区向左扩张
                 # 将被判定为垃圾的当前数字，与盲区最右侧的未知数字交换
-                nums[l], nums[r] = nums[r], nums[l]
-            # 场景 3: 数字有效且未归位 -> 将其送到它该去的下标 (nums[l] - 1)
+                nums[left], nums[right] = nums[right], nums[left]
+            # 场景 3: 数字有效且未归位 -> 将其送到它该去的下标 (nums[left] - 1)
             else:
                 # 提前提取目标索引，防止 Python 多重赋值特性带来的覆盖 bug
-                target_idx = nums[l] - 1
-                # 执行交换操作，注意 l 指针停在原地，等待下一轮审视被换过来的新数字
-                nums[l], nums[target_idx] = nums[target_idx], nums[l]
-        # 循环结束，有效区 [0, l) 存放了 1 到 l 的完美序列
-        # 因此，缺失的最小正数必然是紧随其后的 l + 1
-        return l + 1
+                target_index = nums[left] - 1
+                # 执行交换操作，注意 left 指针停在原地，等待下一轮审视被换过来的新数字
+                nums[left], nums[target_index] = nums[target_index], nums[left]
+        # 循环结束，有效区 [0, left) 存放了 1 到 left 的完美序列
+        # 因此，缺失的最小正数必然是紧随其后的 left + 1
+        return left + 1
 ```
 
 ---
